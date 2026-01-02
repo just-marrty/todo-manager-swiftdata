@@ -42,13 +42,11 @@ struct TodoQueryListView: View {
                         
                         if todo.isDone == true {
                             HStack {
-                                Text("Done")
                                 Image(systemName: "checkmark.circle")
                             }
                             .foregroundStyle(.green)
                         } else if let dueDate = todo.dueDate, dueDate < Date() {
                             HStack {
-                                Text("Expired")
                                 Image(systemName: "exclamationmark.circle")
                             }
                             .foregroundStyle(.red)
