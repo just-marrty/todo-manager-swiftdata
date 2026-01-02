@@ -20,7 +20,7 @@ struct TodoQueryListView: View {
     @State private var queryVM: QueryListViewModel
     
     var filteredTodos: [Todo] {
-        queryVM.filteredTodos(from: todos)
+        queryVM.filteredTodos(from: todos, searchText: searchText)
     }
     
     var body: some View {

@@ -13,6 +13,7 @@ struct TodoMainScreen: View {
     @AppStorage("isDarkOn") private var isDarkOn: Bool = false
     
     @State private var searchText: String = ""
+    @State private var queryVM = QueryListViewModel()
     
     var body: some View {
         TabView {

@@ -23,13 +23,13 @@ class QueryListViewModel {
         priority?.rawValue ?? "All"
     }
     
-    func filteredTodos(from todos: [Todo]) -> [Todo] {
+    func filteredTodos(from todos: [Todo], searchText: String) -> [Todo] {
         var filtered = todos
         if let priority = priority {
             filtered = todos.filter { $0.priority == priority }
         }
-        if !searchString.isEmpty {
-            filtered = filtered.filter { $0.title.localizedStandardContains(searchString) }
+        if !searchText.isEmpty {
+            filtered = filtered.filter { $0.title.localizedStandardContains(searchText) }
         }
         return filtered
     }
