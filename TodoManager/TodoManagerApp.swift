@@ -1,6 +1,6 @@
 //
 //  TodoManagerApp.swift
-//  TaskManager
+//  TodoManager
 //
 //  Created by Martin Hrbáček on 30.12.2025.
 //
@@ -12,7 +12,7 @@ import SwiftData
 struct TodoManagerApp: App {
     var body: some Scene {
         WindowGroup {
-            TodoListScreen()
+            TodoMainScreen()
         }
         .modelContainer(for: Todo.self)
     }

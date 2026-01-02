@@ -1,5 +1,5 @@
 //
-//  SettingsView.swift
+//  TodoSettingsView.swift
 //  TodoManager
 //
 //  Created by Martin Hrbáček on 01.01.2026.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SettingsView: View {
+struct TodoSettingsView: View {
     
     @AppStorage("isListRowSpacing") private var isListRowSpacing: Bool = false
     @AppStorage("isDarkOn") private var isDarkOn: Bool = false
@@ -42,6 +42,6 @@ struct SettingsView: View {
 
 #Preview {
     NavigationStack {
-        SettingsView()
+        TodoSettingsView()
     }
 }

@@ -1,6 +1,6 @@
 //
 //  Todo.swift
-//  TaskManager
+//  TodoManager
 //
 //  Created by Martin Hrbáček on 30.12.2025.
 //
