@@ -12,32 +12,29 @@ struct TodoMainScreen: View {
     
     @AppStorage("isDarkOn") private var isDarkOn: Bool = false
     
-    @State private var searchText: String = ""
-    @State private var queryVM = QueryListViewModel()
-    
     var body: some View {
         TabView {
             Tab("All", systemImage: "rectangle.grid.1x3") {
                 NavigationStack {
-                    TodoQueryListView(searchString: searchText, priority: nil)
+                    TodoQueryListView(priority: nil)
                 }
             }
             
             Tab("Low", systemImage: "1.square") {
                 NavigationStack {
-                    TodoQueryListView(searchString: searchText, priority: .low)
+                    TodoQueryListView(priority: .low)
                 }
             }
             
             Tab("Medium", systemImage: "2.square") {
                 NavigationStack {
-                    TodoQueryListView(searchString: searchText, priority: .medium)
+                    TodoQueryListView(priority: .medium)
                 }
             }
             
             Tab("High", systemImage: "3.square") {
                 NavigationStack {
-                    TodoQueryListView(searchString: searchText, priority: .high)
+                    TodoQueryListView(priority: .high)
                 }
             }
         }

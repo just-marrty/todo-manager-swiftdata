@@ -11,12 +11,10 @@ import Observation
 @Observable
 @MainActor
 class QueryListViewModel {
-    let searchString: String
     let priority: TodoPriority?
     
-    init(searchString: String = "", priority: TodoPriority? = nil) {
+    init(priority: TodoPriority? = nil) {
         self.priority = priority
-        self.searchString = searchString
     }
     
     var priorityTitle: String {

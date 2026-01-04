@@ -107,8 +107,8 @@ struct TodoQueryListView: View {
         .animation(.default, value: searchText)
     }
     
-    init(searchString: String = "", priority: TodoPriority? = nil) {
-        _queryVM = State(initialValue: QueryListViewModel(searchString: searchString, priority: priority))
+    init(priority: TodoPriority? = nil) {
+        _queryVM = State(initialValue: QueryListViewModel(priority: priority))
         
         _todos = Query(sort: \Todo.dueDate)
     }
