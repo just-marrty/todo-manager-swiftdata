@@ -1,5 +1,5 @@
 //
-//  TodoMainScreen.swift
+//  TodoMainView.swift
 //  TodoManager
 //
 //  Created by Martin Hrbáček on 30.12.2025.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct TodoMainScreen: View {
+struct TodoMainView: View {
     
     @AppStorage("isDarkOn") private var isDarkOn: Bool = false
     
@@ -43,6 +43,6 @@ struct TodoMainScreen: View {
 }
 
 #Preview {
-    TodoMainScreen()
+    TodoMainView()
         .modelContainer(for: Todo.self, inMemory: false)
 }

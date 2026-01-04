@@ -12,8 +12,8 @@ import SwiftData
 struct TodoManagerApp: App {
     var body: some Scene {
         WindowGroup {
-            TodoMainScreen()
+            TodoMainView()
         }
-        .modelContainer(for: Todo.self)
+        .modelContainer(for: Todo.self, inMemory: false)
     }
 }
