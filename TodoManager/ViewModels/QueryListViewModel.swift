@@ -11,6 +11,7 @@ import Observation
 @Observable
 @MainActor
 class QueryListViewModel {
+    var title: String = ""
     let priority: TodoPriority?
     
     init(priority: TodoPriority? = nil) {
@@ -30,5 +31,13 @@ class QueryListViewModel {
             filtered = filtered.filter { $0.title.localizedStandardContains(searchText) }
         }
         return filtered
+    }
+    
+    func isFormValid() -> Bool {
+        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    
+    func trimmedTitle() -> String {
+        title.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

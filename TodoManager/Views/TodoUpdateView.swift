@@ -13,24 +13,20 @@ struct TodoUpdateView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
     
-    @State private var title: String = ""
     @State private var category: TodoCategory = .general
     @State private var priority: TodoPriority = .medium
     @State private var dueDate = Date()
     @State private var isDueDate: Bool = false
     @State private var isTodoDone: Bool = false
+    @State private var queryVM = QueryListViewModel()
     
     let todo: Todo
-    
-    private var isFormValid: Bool {
-        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-    }
     
     var body: some View {
         Form {
             // MARK: - Your task
             Section {
-                TextEditor(text: $title)
+                TextEditor(text: $queryVM.title)
                     .frame(height: 130)
                     .autocorrectionDisabled()
             } header: {
@@ -96,7 +92,7 @@ struct TodoUpdateView: View {
         }
         .navigationBarTitle("Update Task")
         .onAppear {
-            title = todo.title
+            queryVM.title = todo.title
             category = todo.category
             priority = todo.priority
             if let savedDueDate = todo.dueDate {
@@ -117,7 +113,7 @@ struct TodoUpdateView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let trimmedTitle = queryVM.title.trimmingCharacters(in: .whitespacesAndNewlines)
                     todo.title = trimmedTitle
                     todo.category = category
                     todo.priority = priority
@@ -134,7 +130,7 @@ struct TodoUpdateView: View {
                 } label: {
                     Text("Update")
                 }
-                .disabled(!isFormValid)
+                .disabled(!queryVM.isFormValid())
             }
         }
         .scrollContentBackground(.hidden)

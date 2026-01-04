@@ -13,21 +13,17 @@ struct AddTodoView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var context
     
-    @State private var title: String = ""
     @State private var category: TodoCategory = .general
     @State private var priority: TodoPriority = .medium
     @State private var dueDate = Date()
     @State private var isDueDate: Bool = false
-    
-    private var isFormValid: Bool {
-        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-    }
+    @State private var queryVM = QueryListViewModel()
     
     var body: some View {
         Form {
             // MARK: - New task
             Section {
-                TextEditor(text: $title)
+                TextEditor(text: $queryVM.title)
                     .frame(height: 130)
                     .autocorrectionDisabled()
             } header: {
@@ -81,7 +77,7 @@ struct AddTodoView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+                    let trimmedTitle = queryVM.trimmedTitle()
                     let newTodo = Todo(title: trimmedTitle, isDone: false, category: category, priority: priority, dueDate: isDueDate ? dueDate : nil, createdAt: .now)
                     context.insert(newTodo)
                     do {
@@ -94,7 +90,7 @@ struct AddTodoView: View {
                 } label: {
                     Text("Save")
                 }
-                .disabled(!isFormValid)
+                .disabled(!queryVM.isFormValid())
             }
         }
         .scrollContentBackground(.hidden)
