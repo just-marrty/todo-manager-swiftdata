@@ -75,16 +75,16 @@ ViewModel for TodoQueryListView handling filtering logic:
 - Uses Constructor Dependency Injection (accepts `priority` parameter)
 - Business logic separated from UI for testability
 
-### Screens & Views
+### Views
 
 #### TodoManagerApp
 
 Application entry point:
 - Configures SwiftData model container for `Todo` model
-- Sets up `WindowGroup` with `TodoMainScreen` as root view
+- Sets up `WindowGroup` with `TodoMainView` as root view
 - Provides model context to entire app hierarchy
 
-#### TodoMainScreen
+#### TodoMainView
 
 Main navigation hub with priority-based tabs:
 - Uses `TabView` with four tabs:
