@@ -65,15 +65,20 @@ Main model representing a task:
 
 #### QueryListViewModel
 
-ViewModel for TodoQueryListView handling filtering logic:
+ViewModel for TodoQueryListView handling filtering and form validation logic:
 - Decorated with `@Observable` macro for SwiftUI observation
 - Marked with `@MainActor` for main thread execution
 - Properties:
+  - `title: String` - Stores task title for form validation (used in AddTodoView and TodoUpdateView)
   - `priority: TodoPriority?` - Optional priority filter
 - Computed property `priorityTitle` returns display title ("All" or priority name)
-- Method `filteredTodos(from:searchText:)` filters todos by priority and search text
+- Methods:
+  - `filteredTodos(from:searchText:)` - Filters todos by priority and search text
+  - `isFormValid()` - Validates that title is not empty after trimming whitespace
+  - `trimmedTitle()` - Returns trimmed version of title (removes leading/trailing whitespace)
 - Uses Constructor Dependency Injection (accepts `priority` parameter)
 - Business logic separated from UI for testability
+- Reusable validation logic across multiple views
 
 ### Views
 
@@ -148,16 +153,17 @@ Dynamic list view with filtering, sorting, and search (MVVM pattern):
 #### AddTodoView
 
 Form for creating new tasks:
+- Uses `@State private var queryVM = QueryListViewModel()` for form state management
 - Form-based layout with multiple sections:
-  - **New task section**: `TextEditor` for task description (130pt height, autocorrection disabled)
+  - **New task section**: `TextEditor` bound to `queryVM.title` (130pt height, autocorrection disabled)
   - **Priority section**: Picker for selecting priority level (automatic style)
   - **Category section**: Picker for selecting category (automatic style)
   - **Due date section**: 
     - Toggle for enabling optional due date
     - `DatePicker` appears when enabled (minimum date: current date)
 - Form validation:
-  - Computed property `isFormValid` checks for non-empty title
-  - Title trimmed of whitespace before saving
+  - Uses `queryVM.isFormValid()` to check for non-empty title
+  - Uses `queryVM.trimmedTitle()` to get trimmed title before saving
   - Save button disabled when form is invalid
 - Visual styling:
   - Brown-tinted section backgrounds (0.2 opacity)
@@ -165,9 +171,9 @@ Form for creating new tasks:
   - Hidden scroll content background
 - Navigation bar:
   - Title: "Add Task" (inline display mode)
-  - Trailing button: "Save" (disabled when invalid)
+  - Trailing button: "Save" (disabled via `!queryVM.isFormValid()`)
 - On save:
-  - Creates new `Todo` instance with trimmed title
+  - Creates new `Todo` instance with `queryVM.trimmedTitle()`
   - Sets `isDone` to `false` by default
   - Inserts into `modelContext`
   - Saves context with error handling
@@ -179,33 +185,39 @@ Form for creating new tasks:
 #### TodoUpdateView
 
 Form for editing existing tasks:
+- Uses `@State private var queryVM = QueryListViewModel()` for form state management
 - Similar layout to `AddTodoView` with additional features
 - Receives `todo: Todo` parameter via dependency injection
 - Pre-populates form fields on appear:
-  - Title from existing todo
+  - Sets `queryVM.title` from existing todo
   - Category from existing todo
   - Priority from existing todo
   - Due date toggle and value if present
   - Is done toggle and value if present
+- Form-based layout with multiple sections:
+  - **Your task section**: `TextEditor` bound to `queryVM.title` (130pt height, autocorrection disabled)
+  - **Category section**: Picker for selecting category
+  - **Priority section**: Picker for selecting priority
+  - **Due date section**: Toggle with optional `DatePicker`
+  - **Is done section**: Toggle for marking task completion with green tint and footer message
+- Form validation:
+  - Uses `queryVM.isFormValid()` to check for non-empty title
+  - Uses inline trimming with `queryVM.title.trimmingCharacters(in: .whitespacesAndNewlines)` on save
+  - Update button disabled when form is invalid
 - Additional **Is done section**:
   - Toggle for marking task completion
   - Green-tinted toggle (0.5 opacity)
   - Footer message "Your task is done!" when marked complete
-- Form sections:
-  - Your task (instead of "New task")
-  - Category
-  - Priority
-  - Due date with optional toggle
-  - Is done with optional toggle
 - Navigation bar:
   - Title: "Update Task" (inline display mode)
-  - Trailing button: "Update" (disabled when invalid)
+  - Trailing button: "Update" (disabled via `!queryVM.isFormValid()`)
 - On update:
-  - Updates existing `Todo` properties in-place
+  - Updates existing `Todo` properties in-place with trimmed title
   - Saves context with error handling
   - Dismisses view automatically
 - Same visual styling as `AddTodoView`
 - Uses `@Environment(\.dismiss)` and `@Environment(\.modelContext)`
+- Keyboard dismissal on scroll
 
 #### TodoSettingsView
 
@@ -252,7 +264,7 @@ Application settings and preferences:
 
 ## State Management
 
-- `@State` for local view state (form inputs, toggles, search text)
+- `@State` for local view state (form inputs, toggles, search text, ViewModel instances)
 - `@Environment(\.modelContext)` for SwiftData context
 - `@Environment(\.dismiss)` for programmatic view dismissal
 - `@Query` for reactive data binding to SwiftData
@@ -260,7 +272,7 @@ Application settings and preferences:
 - `@Model` macro for SwiftData model declaration
 - `@Observable` macro for ViewModel observation
 - `@MainActor` for main thread execution
-- State-based form validation with computed properties
+- State-based form validation with ViewModel methods
 - Automatic UI updates via SwiftData observation
 
 ## Key Features Explained
@@ -325,7 +337,8 @@ The main screen features four tabs for efficient task organization:
 Both add and edit screens include robust validation:
 - Title cannot be empty or contain only whitespace
 - Title is automatically trimmed before saving
-- Save/Update button disabled when form is invalid
+- Validation logic centralized in `QueryListViewModel`
+- Save/Update button disabled when form is invalid via `queryVM.isFormValid()`
 - Visual feedback through button state
 
 ## Technologies
