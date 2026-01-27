@@ -262,6 +262,15 @@ Application settings and preferences:
 - Custom filtering logic in ViewModel layer
 - Type-safe queries without predicates
 
+### Constants
+
+**Strings** - Centralized UI string constants
+
+- Organizes all UI strings, error messages, and system image names
+- Improves code maintainability and makes future localization easier
+- Eliminates hardcoded strings throughout the codebase
+- Used across all views and view models for consistent text display
+
 ## State Management
 
 - `@State` for local view state (form inputs, toggles, search text, ViewModel instances)
