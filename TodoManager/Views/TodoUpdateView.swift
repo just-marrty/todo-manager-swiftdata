@@ -30,13 +30,13 @@ struct TodoUpdateView: View {
                     .frame(height: 130)
                     .autocorrectionDisabled()
             } header: {
-                Text("Your task")
+                Text(Strings.yourTask)
             }
             .listRowBackground(Color.brown.opacity(0.2))
             
             // MARK: - Category
             Section {
-                Picker("Select category", selection: $category) {
+                Picker(Strings.selectCategory, selection: $category) {
                     ForEach(TodoCategory.allCases, id: \.self) {   category in
                         Text(category.rawValue)
                             .tag(category)
@@ -44,13 +44,13 @@ struct TodoUpdateView: View {
                 }
                 .pickerStyle(.automatic)
             } header: {
-                Text("Category")
+                Text(Strings.category)
             }
             .listRowBackground(Color.brown.opacity(0.2))
             
             // MARK: - Priority
             Section {
-                Picker("Select priority", selection: $priority) {
+                Picker(Strings.selectPriority, selection: $priority) {
                     ForEach(TodoPriority.allCases, id: \.rawValue) { priority in
                         Text(priority.rawValue)
                             .tag(priority)
@@ -58,39 +58,39 @@ struct TodoUpdateView: View {
                 }
                 .pickerStyle(.automatic)
             } header: {
-                Text("Priority")
+                Text(Strings.priority)
             }
             .listRowBackground(Color.brown.opacity(0.2))
             
             // MARK: - Due date
             Section {
-                Toggle("With due date (optional)", isOn: $isDueDate)
+                Toggle(Strings.withDueDate, isOn: $isDueDate)
                     .tint(.blue.opacity(0.5))
                 
                 if isDueDate {
-                    DatePicker("Select due date", selection: $dueDate, in: Date()...)
+                    DatePicker(Strings.selectDueDate, selection: $dueDate, in: Date()...)
                 }
             } header: {
-                Text("Due date")
+                Text(Strings.dueDate)
             }
             .listRowBackground(Color.brown.opacity(0.2))
             
             // MARK: - Is done
             Section {
-                Toggle("Is done (optional)", isOn: $isTodoDone)
+                Toggle(Strings.isDone, isOn: $isTodoDone)
                     .tint(.green.opacity(0.5))
             } header: {
-                Text("Is done")
+                Text(Strings.isDone)
             } footer: {
                 if isTodoDone {
-                    Text("Your task is done!")
+                    Text(Strings.yourTaskIsDone)
                         .font(.system(size: 18))
                         .foregroundStyle(.green)
                 }
             }
             .listRowBackground(Color.brown.opacity(0.2))
         }
-        .navigationBarTitle("Update Task")
+        .navigationBarTitle(Strings.updateTask)
         .onAppear {
             queryVM.title = todo.title
             category = todo.category
@@ -128,7 +128,7 @@ struct TodoUpdateView: View {
                     
                     dismiss()
                 } label: {
-                    Text("Update")
+                    Text(Strings.updated)
                 }
                 .disabled(!queryVM.isFormValid())
             }

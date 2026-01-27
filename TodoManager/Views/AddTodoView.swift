@@ -27,13 +27,13 @@ struct AddTodoView: View {
                     .frame(height: 130)
                     .autocorrectionDisabled()
             } header: {
-                Text("New task")
+                Text(Strings.newTask)
             }
             .listRowBackground(Color.brown.opacity(0.2))
             
             // MARK: - Priority
             Section {
-                Picker("Select priority", selection: $priority) {
+                Picker(Strings.selectPriority, selection: $priority) {
                     ForEach(TodoPriority.allCases, id: \.rawValue) { priority in
                         Text(priority.rawValue)
                             .tag(priority)
@@ -41,13 +41,13 @@ struct AddTodoView: View {
                 }
                 .pickerStyle(.automatic)
             } header: {
-                Text("Priority")
+                Text(Strings.priority)
             }
             .listRowBackground(Color.brown.opacity(0.2))
             
             // MARK: - Category
             Section {
-                Picker("Select category", selection: $category) {
+                Picker(Strings.selectCategory, selection: $category) {
                     ForEach(TodoCategory.allCases, id: \.self) { category in
                         Text(category.rawValue)
                             .tag(category)
@@ -55,24 +55,24 @@ struct AddTodoView: View {
                 }
                 .pickerStyle(.automatic)
             } header: {
-                Text("Category")
+                Text(Strings.category)
             }
             .listRowBackground(Color.brown.opacity(0.2))
             
             // MARK: - Due date
             Section {
-                Toggle("With due date (optional)", isOn: $isDueDate)
+                Toggle(Strings.withDueDate, isOn: $isDueDate)
                     .tint(.blue.opacity(0.5))
                 
                 if isDueDate {
-                    DatePicker("Due date", selection: $dueDate, in: Date()...)
+                    DatePicker(Strings.dueDate, selection: $dueDate, in: Date()...)
                 }
             } header: {
-                Text("Due date")
+                Text(Strings.dueDate)
             }
             .listRowBackground(Color.brown.opacity(0.2))
         }
-        .navigationBarTitle("Add Task")
+        .navigationBarTitle(Strings.addTask)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -88,7 +88,7 @@ struct AddTodoView: View {
                     
                     dismiss()
                 } label: {
-                    Text("Save")
+                    Text(Strings.save)
                 }
                 .disabled(!queryVM.isFormValid())
             }

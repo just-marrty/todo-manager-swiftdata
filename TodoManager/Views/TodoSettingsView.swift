@@ -15,22 +15,22 @@ struct TodoSettingsView: View {
     var body: some View {
         Form {
             Section {
-                Toggle("List row spacing", isOn: $isListRowSpacing)
+                Toggle(Strings.listRowSpacing, isOn: $isListRowSpacing)
                     .tint(.blue.opacity(0.5))
             } header: {
-                Text("Design - Rows")
+                Text(Strings.designRows)
             }
             .listRowBackground(Color.brown.opacity(0.2))
             
             Section {
-                Toggle(isDarkOn ? "Light mode" : "Dark mode", isOn: $isDarkOn)
+                Toggle(isDarkOn ? Strings.lightMode : Strings.darkMode, isOn: $isDarkOn)
                     .tint(.blue.opacity(0.5))
             } header: {
-                Text("Design - Appearance")
+                Text(Strings.designAppearance)
             }
             .listRowBackground(Color.brown.opacity(0.2))
         }
-        .navigationTitle("Settings")
+        .navigationTitle(Strings.settings)
         .scrollContentBackground(.hidden)
         .background {
             Color.blue.opacity(0.1)

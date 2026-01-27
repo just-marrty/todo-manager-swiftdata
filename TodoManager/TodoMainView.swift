@@ -14,25 +14,25 @@ struct TodoMainView: View {
     
     var body: some View {
         TabView {
-            Tab("All", systemImage: "rectangle.grid.1x3") {
+            Tab(Strings.tabAll, systemImage: Strings.rectangleGrid) {
                 NavigationStack {
                     TodoQueryListView(priority: nil)
                 }
             }
             
-            Tab("Low", systemImage: "1.square") {
+            Tab(Strings.tabLow, systemImage: Strings.square1) {
                 NavigationStack {
                     TodoQueryListView(priority: .low)
                 }
             }
             
-            Tab("Medium", systemImage: "2.square") {
+            Tab(Strings.tabMedium, systemImage: Strings.square2) {
                 NavigationStack {
                     TodoQueryListView(priority: .medium)
                 }
             }
             
-            Tab("High", systemImage: "3.square") {
+            Tab(Strings.tabHigh, systemImage: Strings.square3) {
                 NavigationStack {
                     TodoQueryListView(priority: .high)
                 }

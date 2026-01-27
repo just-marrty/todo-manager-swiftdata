@@ -30,29 +30,29 @@ struct TodoQueryListView: View {
                     Text(todo.title)
                         .lineLimit(1)
                     HStack {
-                        Text("Priority:")
+                        Text(Strings.priority)
                         Text(todo.priority.rawValue)
                             .foregroundStyle(todo.priority.color)
                     }
                     HStack {
-                        Text("Due date:")
-                        Text(todo.dueDate?.formatted() ?? "No due date")
+                        Text(Strings.dueDate)
+                        Text(todo.dueDate?.formatted() ?? Strings.noDueDate)
                         
                         Spacer()
                         
                         if todo.isDone == true {
                             HStack {
-                                Image(systemName: "checkmark.circle")
+                                Image(systemName: Strings.checkmarkCircle)
                             }
                             .foregroundStyle(.green)
                         } else if let dueDate = todo.dueDate, dueDate < Date() {
                             HStack {
-                                Image(systemName: "exclamationmark.circle")
+                                Image(systemName: Strings.exclamationmarkCircle)
                             }
                             .foregroundStyle(.red)
                         } else {
                             HStack {
-                                Image(systemName: "figure.run.circle")
+                                Image(systemName: Strings.figureRunCircle)
                             }
                         }
                     }
@@ -68,7 +68,7 @@ struct TodoQueryListView: View {
                         print(error.localizedDescription)
                     }
                 } label: {
-                    Image(systemName: "trash.fill")
+                    Image(systemName: Strings.trashFill)
                 }
                 .tint(.red.opacity(0.5))
             }
@@ -76,13 +76,13 @@ struct TodoQueryListView: View {
                 .fill(Color.brown.opacity(0.2)))
             .listRowInsets(EdgeInsets(top: 8, leading: 15, bottom: 8, trailing: 15))
         }
-        .navigationTitle("My Tasks - \(queryVM.priorityTitle)")
+        .navigationTitle(Strings.myTasks+queryVM.priorityTitle)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 NavigationLink {
                     TodoSettingsView()
                 } label: {
-                    Image(systemName: "gear")
+                    Image(systemName: Strings.gear)
                 }
             }
             
@@ -90,7 +90,7 @@ struct TodoQueryListView: View {
                 NavigationLink {
                     AddTodoView()
                 } label: {
-                    Image(systemName: "plus")
+                    Image(systemName: Strings.plus)
                 }
             }
         }
@@ -103,7 +103,7 @@ struct TodoQueryListView: View {
             Color.blue.opacity(0.1)
                 .ignoresSafeArea()
         }
-        .searchable(text: $searchText, prompt: "Search your tasks...")
+        .searchable(text: $searchText, prompt: Strings.searchYourTasks)
         .animation(.default, value: searchText)
     }
     
