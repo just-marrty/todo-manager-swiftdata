@@ -62,4 +62,7 @@ struct Strings {
     static let trashFill = "trash.fill"
     static let gear = "gear"
     static let plus = "plus"
+    
+    // MARK: - Fallbacks
+    static let all = "All"
 }

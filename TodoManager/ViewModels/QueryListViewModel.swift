@@ -19,7 +19,7 @@ class QueryListViewModel {
     }
     
     var priorityTitle: String {
-        priority?.rawValue ?? "All"
+        priority?.rawValue ?? Strings.all
     }
     
     func filteredTodos(from todos: [Todo], searchText: String) -> [Todo] {
