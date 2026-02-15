@@ -128,7 +128,7 @@ struct TodoUpdateView: View {
                     
                     dismiss()
                 } label: {
-                    Text(Strings.updated)
+                    Text(Strings.update)
                 }
                 .disabled(!queryVM.isFormValid())
             }
